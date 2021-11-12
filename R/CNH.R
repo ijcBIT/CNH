@@ -1,4 +1,4 @@
-#' copy number intra-tumor heterogeneity (CNH) from a single copy number measurement.
+#' copy number intra-tumor heterogeneity (CNH) from a single copy number measurement
 #'
 #' MATLAB CNH.m function translation into R to calculate copy number intra-tumor heterogeneity (CNH) from a single copy number measurement.
 #' In this method, relative segmented copy numbers are transformed to absolute copy numbers and the distance
@@ -12,31 +12,30 @@
 #' corresponding to the inferred CNH.
 
 #
-#' @param seg_val values of relative copy numbers per segment, vector of size Nx1
-#' @param seg_len segment lengths, vector of size Nx1
-#' @param ploidy tumour ploidy,
-#' 4th input argument:   (purity)        sample purity, default = NULL for grid search
+#' @param seg_val numeric vector with values of relative copy numbers per segment.
+#' @param seg_len numeric vector with segment lengths.
+#' @param ploidy tumour ploidy
+#' @param purity sample purity, default = NULL for grid search
 
 #' @return
-#' 1st output argument: \code{CNH_out}       inferred CNH
-#' 2nd output argument: \code{ploidy_out}    inferred ploidy for empty input ploidy, otherwise same as input ploidy.
-#' 3th output argument: \code{purity_out}    inferred purity for empty input purity, otherwise same as input purity.
-
-
-#' @usage  CNH(seg_val,seg_len)
-#' @examples
-#' > SJBALL247_D <- read.delim("~/Documents/Projects/20211111CIN_B_ALL/SJBALL247_D.bed", header=FALSE)
-#' > seg_len <- SJBALL247_D[,3]-SJBALL247_D[,2]
-#' > seg_val<- SJBALL247_D[,4]
-
-#' > CNH(seg_val,seg_len)
-#' $CNH
-#' [1] 0.0376
-#' $ploidy
-#' [1] 1.5
+#' 1st output argument: \code{CNH_out}      --> inferred CNH
 #'
-#' $purity
-#' [1] 0.99
+#' 2nd output argument: \code{ploidy_out}  -->  inferred ploidy for empty input ploidy, otherwise same as input ploidy.
+#'
+#' 3th output argument: \code{purity_out}   -->  inferred purity for empty input purity, otherwise same as input purity.
+#'
+
+
+#' @usage  CNH(seg_val,seg_len,ploidy,purity)
+#' @examples
+#' file = paste0(path.package("CNH"), "/SJBALL247_D.bed")
+#' SJBALL247_D <- read.delim(file, header=FALSE)
+#' seg_len <- SJBALL247_D[,3]-SJBALL247_D[,2]
+#' seg_val<- SJBALL247_D[,4]
+
+#' CNH(seg_val,seg_len)
+
+#' @export
 
 
 CNH <-function(seg_val ,seg_len, ploidy = seq(1.5,5,0.01), purity = seq(0.2,1,0.01)){
